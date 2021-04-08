@@ -393,11 +393,7 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
 
    private void onSlider(final int index, final int value)
    {
-      if (mMode == Mode.PLAY)
-      {
-         mDeviceEnvelopes.getParameter(index).set(value, 128);
-      }
-      else if (index == 8)
+      if (index == 8)
       {
          mMasterTrack.volume().set(value, 128);
       }

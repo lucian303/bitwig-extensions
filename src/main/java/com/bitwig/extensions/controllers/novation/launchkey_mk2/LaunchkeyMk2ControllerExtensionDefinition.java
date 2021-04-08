@@ -69,7 +69,7 @@ public class LaunchkeyMk2ControllerExtensionDefinition extends ControllerExtensi
    @Override
    public String getName()
    {
-      return getHardwareModel();
+      return getHardwareModel() + " (Enhanced)";
    }
 
    @Override
@@ -110,5 +110,5 @@ public class LaunchkeyMk2ControllerExtensionDefinition extends ControllerExtensi
    private static final LaunchkeyMk2ControllerExtensionDefinition
       INSTANCE = new LaunchkeyMk2ControllerExtensionDefinition();
 
-   private static final UUID EXTENSION_UUID = UUID.fromString("cca78f4a-a37e-4e83-a8af-31bcc751881d");
+   private static final UUID EXTENSION_UUID = UUID.fromString("e77b0500-e4ff-46bb-b9d6-2c7c3bc3ca03");
 }
