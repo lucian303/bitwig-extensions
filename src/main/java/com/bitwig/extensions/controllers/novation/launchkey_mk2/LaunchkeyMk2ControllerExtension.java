@@ -86,6 +86,7 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
       mCursorTrack.position().markInterested();
       mCursorTrack.name().markInterested();
       mCursorTrack.isActivated().markInterested();
+      mCursorTrack.exists().markInterested();
 
       mMasterTrack = mHost.createMasterTrack(2);
       mMasterTrack.volume().markInterested();
@@ -121,6 +122,7 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
          track.volume().markInterested();
          track.name().markInterested();
          track.isActivated().markInterested();
+         track.exists().markInterested();
 
          final ClipLauncherSlotBank clipLauncherSlotBank = track.clipLauncherSlotBank();
          for (int s = 0; s < 2; s++)
@@ -476,11 +478,12 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
 
    private void showTrackName()
    {
-      if (mCursorTrack.isActivated().get())
+      if (mCursorTrack.exists().get())
       {
+         mCursorTrack.selectInMixer();
          int pos = mCursorTrack.position().getAsInt();
          String name = mCursorTrack.name().get();
-         mHost.showPopupNotification("Track: " + (pos + 1) + ": " + name);
+         mHost.scheduleTask(() -> mHost.showPopupNotification("Track: " + (pos + 1) + ": " + name), 150);
       }
    }
 
@@ -528,7 +531,7 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
             if (device.exists().get())
             {
                mCursorDevice.selectDevice(device);
-               mHost.showPopupNotification("Device: " + mCursorDevice.name().get());
+               mHost.scheduleTask(() -> mHost.showPopupNotification("Device: " + mCursorDevice.name().get()), 150);
             }
             else
             {
