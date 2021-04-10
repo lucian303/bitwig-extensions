@@ -2,6 +2,7 @@ package com.bitwig.extensions.controllers.novation.launchkey_mk2;
 
 import java.util.Arrays;
 
+import com.bitwig.extension.callback.BooleanValueChangedCallback;
 import com.bitwig.extension.controller.api.IntegerValue;
 import com.bitwig.extension.controller.api.StringValue;
 import com.bitwig.extensions.controllers.novation.common.DefaultPalette;
@@ -87,6 +88,7 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
       mCursorTrack.name().markInterested();
       mCursorTrack.isActivated().markInterested();
       mCursorTrack.exists().markInterested();
+      mCursorTrack.addIsSelectedInMixerObserver(this.showTrackName());
 
       mMasterTrack = mHost.createMasterTrack(2);
       mMasterTrack.volume().markInterested();
@@ -476,15 +478,14 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
       }
    }
 
-   private void showTrackName()
+   private BooleanValueChangedCallback showTrackName()
    {
-      if (mCursorTrack.exists().get())
-      {
+      return b -> {
          mCursorTrack.selectInMixer();
          int pos = mCursorTrack.position().getAsInt();
          String name = mCursorTrack.name().get();
          mHost.scheduleTask(() -> mHost.showPopupNotification("Track: " + (pos + 1) + ": " + name), 150);
-      }
+      };
    }
 
    private void onRoundPad(final int pad, final int value)
