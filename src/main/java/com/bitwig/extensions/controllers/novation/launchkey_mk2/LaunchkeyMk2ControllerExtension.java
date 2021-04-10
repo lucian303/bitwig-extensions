@@ -2,6 +2,8 @@ package com.bitwig.extensions.controllers.novation.launchkey_mk2;
 
 import java.util.Arrays;
 
+import com.bitwig.extension.controller.api.IntegerValue;
+import com.bitwig.extension.controller.api.StringValue;
 import com.bitwig.extensions.controllers.novation.common.DefaultPalette;
 import com.bitwig.extensions.controllers.novation.common.SimpleLed;
 import com.bitwig.extension.controller.ControllerExtension;
@@ -175,7 +177,7 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
          mDeviceEnvelopes.getParameter(i).setIndication(mMode == Mode.PLAY);
       }
 
-      mMasterTrack.volume().setIndication(mMode != Mode.PLAY);
+      mMasterTrack.volume().setIndication(true);
    }
 
    private void setMode(final Mode mode, final boolean showNotification)
@@ -446,6 +448,8 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
       else
       {
          mCursorTrack.selectNext();
+         IntegerValue pos = mCursorTrack.position();
+         StringValue name = mCursorTrack.name();
       }
    }
 
