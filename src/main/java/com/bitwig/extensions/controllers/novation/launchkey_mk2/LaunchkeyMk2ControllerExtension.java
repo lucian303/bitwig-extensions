@@ -79,15 +79,22 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
       mCursorDevice = mCursorTrack.createCursorDevice();
       mDrumDevice = mCursorTrack.createCursorDevice("inst", "Drum device", 0, FIRST_INSTRUMENT);
       mCursorDevice.exists().markInterested();
+      mCursorDevice.name().markInterested();
       mDrumPadBank = mDrumDevice.createDrumPadBank(16);
       mDrumPadBank.scrollPosition().set(36);
       mCursorTrack.playingNotes().markInterested();
+      mCursorTrack.position().markInterested();
+      mCursorTrack.name().markInterested();
+      mCursorTrack.isActivated().markInterested();
+
       mMasterTrack = mHost.createMasterTrack(2);
+      mMasterTrack.volume().markInterested();
 
       mRemoteControls = mCursorDevice.createCursorRemoteControlsPage(8);
       mRemoteControls.setHardwareLayout(HardwareControlType.KNOB, 8);
       mRemoteControls.selectedPageIndex().markInterested();
       mRemoteControls.pageCount().markInterested();
+      mRemoteControls.pageNames().markInterested();
       mDeviceEnvelopes = mCursorDevice.createCursorRemoteControlsPage("envelope", 9, "envelope");
       mDeviceEnvelopes.setHardwareLayout(HardwareControlType.SLIDER, 9);
       mTrackBank = mHost.createTrackBank(8, 0, 2);
@@ -101,12 +108,20 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
          final RemoteControl parameter = mRemoteControls.getParameter(i);
          parameter.markInterested();
          parameter.exists().markInterested();
+         parameter.name().markInterested();
 
          final RemoteControl drumParameter = mDrumRemoteControls.getParameter(i);
          drumParameter.markInterested();
 
          final Track track = mTrackBank.getItemAt(i);
          track.arm().markInterested();
+         track.solo().markInterested();
+         track.mute().markInterested();
+         track.position().markInterested();
+         track.volume().markInterested();
+         track.name().markInterested();
+         track.isActivated().markInterested();
+
          final ClipLauncherSlotBank clipLauncherSlotBank = track.clipLauncherSlotBank();
          for (int s = 0; s < 2; s++)
          {
@@ -353,6 +368,7 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
       else
       {
          mTrackBank.scrollPageBackwards();
+         mHost.showPopupNotification("Previous Bank");
       }
    }
 
@@ -369,6 +385,7 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
       else
       {
          mTrackBank.scrollPageForwards();
+         mHost.showPopupNotification("Next Bank");
       }
    }
 
@@ -376,7 +393,9 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
    {
       if (mMode == Mode.PLAY)
       {
-         mRemoteControls.getParameter(index).set(value, 128);
+         RemoteControl param = mRemoteControls.getParameter(index);
+         param.set(value, 128);
+         mHost.showPopupNotification("Param: " + param.name().get() + ": " + value);
       }
       else if (mMode == Mode.DRUM)
       {
@@ -393,10 +412,13 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
       if (index == 8)
       {
          mMasterTrack.volume().set(value, 128);
+         mHost.showPopupNotification("Master Volume: " + value);
       }
       else
       {
-         mTrackBank.getItemAt(index).volume().set(value, 128);
+         Track track = mTrackBank.getItemAt(index);
+         track.volume().set(value, 128);
+         mHost.showPopupNotification("Volume: " + (track.position().get() + 1) + ": " + value);
       }
    }
 
@@ -413,11 +435,15 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
          }
          else if (mSoloMode)
          {
-            mTrackBank.getItemAt(index).solo().toggle(true);
+            Track track = mTrackBank.getItemAt(index);
+            track.solo().toggle(true);
+            mHost.showPopupNotification("Solo: " + (track.position().get() + 1) + ": " + !track.solo().get());
          }
          else
          {
-            mTrackBank.getItemAt(index).mute().toggle();
+            Track track = mTrackBank.getItemAt(index);
+            track.mute().toggle();
+            mHost.showPopupNotification("Mute: " + (track.position().get() + 1) + ": " + !track.mute().get());
          }
       }
    }
@@ -431,6 +457,7 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
       else
       {
          mCursorTrack.selectPrevious();
+         showTrackName();
       }
    }
 
@@ -443,6 +470,17 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
       else
       {
          mCursorTrack.selectNext();
+         showTrackName();
+      }
+   }
+
+   private void showTrackName()
+   {
+      if (mCursorTrack.isActivated().get())
+      {
+         int pos = mCursorTrack.position().getAsInt();
+         String name = mCursorTrack.name().get();
+         mHost.showPopupNotification("Track: " + (pos + 1) + ": " + name);
       }
    }
 
@@ -481,6 +519,7 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
          if (row == 0)
          {
             mRemoteControls.selectedPageIndex().set(column);
+            mHost.showPopupNotification("Parameter Bank: " + mRemoteControls.pageNames().get()[column]);
          }
          else if (row == 1)
          {
@@ -489,6 +528,7 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
             if (device.exists().get())
             {
                mCursorDevice.selectDevice(device);
+               mHost.showPopupNotification("Device: " + mCursorDevice.name().get());
             }
             else
             {
