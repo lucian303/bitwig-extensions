@@ -167,7 +167,7 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
          final Track track = mTrackBank.getItemAt(i);
          final ClipLauncherSlotBank clipLauncherSlotBank = track.clipLauncherSlotBank();
          clipLauncherSlotBank.setIndication(mMode == Mode.LAUNCH);
-         track.volume().setIndication(mMode != Mode.PLAY);
+         track.volume().setIndication(true);
       }
 
       for (int i = 0; i < 9; ++i)
@@ -355,7 +355,7 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
       }
       else
       {
-         mTransport.rewind();
+         mTrackBank.scrollPageBackwards();
       }
    }
 
@@ -371,7 +371,7 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
       }
       else
       {
-         mTransport.fastForward();
+         mTrackBank.scrollPageForwards();
       }
    }
 
