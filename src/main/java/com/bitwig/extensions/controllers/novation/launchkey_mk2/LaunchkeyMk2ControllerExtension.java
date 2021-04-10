@@ -461,7 +461,6 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
       else
       {
          mCursorTrack.selectPrevious();
-         showTrackName();
       }
    }
 
@@ -474,7 +473,6 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
       else
       {
          mCursorTrack.selectNext();
-         showTrackName();
       }
    }
 
@@ -484,7 +482,7 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
          mCursorTrack.selectInMixer();
          int pos = mCursorTrack.position().getAsInt();
          String name = mCursorTrack.name().get();
-         mHost.scheduleTask(() -> mHost.showPopupNotification("Track: " + (pos + 1) + ": " + name), 150);
+         mHost.showPopupNotification("Track: " + (pos + 1) + ": " + name);
       };
    }
 
