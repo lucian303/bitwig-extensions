@@ -172,11 +172,6 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
          track.volume().setIndication(true);
       }
 
-      for (int i = 0; i < 9; ++i)
-      {
-         mDeviceEnvelopes.getParameter(i).setIndication(mMode == Mode.PLAY);
-      }
-
       mMasterTrack.volume().setIndication(true);
    }
 
@@ -448,8 +443,6 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
       else
       {
          mCursorTrack.selectNext();
-         IntegerValue pos = mCursorTrack.position();
-         StringValue name = mCursorTrack.name();
       }
    }
 
