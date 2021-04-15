@@ -521,7 +521,11 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
          if (row == 0)
          {
             mRemoteControls.selectedPageIndex().set(column);
-            mHost.showPopupNotification("Parameter Bank: " + mRemoteControls.pageNames().get()[column]);
+            String[] pageNames = mRemoteControls.pageNames().get();
+            if (column < pageNames.length)
+            {
+               mHost.showPopupNotification("Parameter Bank: " + pageNames[column]);
+            }
          }
          else if (row == 1)
          {
