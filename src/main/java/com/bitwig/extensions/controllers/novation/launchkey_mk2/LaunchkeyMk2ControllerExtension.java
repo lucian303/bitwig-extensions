@@ -462,6 +462,9 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
       {
          mCursorTrack.selectPrevious();
       }
+
+      mCursorTrack.makeVisibleInArranger();
+      mCursorTrack.makeVisibleInMixer();
    }
 
    private void nextTrack()
@@ -474,6 +477,9 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
       {
          mCursorTrack.selectNext();
       }
+
+      mCursorTrack.makeVisibleInArranger();
+      mCursorTrack.makeVisibleInMixer();
    }
 
    private BooleanValueChangedCallback showTrackName()
