@@ -26,6 +26,10 @@ com.bitwig.extensions.controllers.devine.VersaKey49Definition
 com.bitwig.extensions.controllers.devine.VersaKey61Definition
 com.bitwig.extensions.controllers.devine.VersaKey88Definition
 
+com.bitwig.extensions.controllers.icon.VCastDefinition
+com.bitwig.extensions.controllers.icon.VCastProDefinition
+com.bitwig.extensions.controllers.icon.VCastRxDefinition
+
 com.bitwig.extensions.controllers.keith_mcmillen.QuNexusDefinition
 
 com.bitwig.extensions.controllers.kenton.KillaMixMiniExtensionDefinition
@@ -40,6 +44,10 @@ com.bitwig.extensions.controllers.midiplus.X8ProControllerExtensionDefinition
 com.bitwig.extensions.controllers.nativeinstruments.maschine.MaschinePlusExtensionDefinition
 com.bitwig.extensions.controllers.nativeinstruments.maschine.MaschineMk3ExtensionDefinition
 com.bitwig.extensions.controllers.nativeinstruments.komplete.KompleteKontrolSMk2ExtensionDefinition
+com.bitwig.extensions.controllers.nativeinstruments.komplete.KompleteKontrolASeriesExtensionDefinition
+com.bitwig.extensions.controllers.nativeinstruments.komplete.KompleteKontrolMSeriesExtensionDefinition
+#com.bitwig.extensions.controllers.mackie.MackieMcuProExtensionDefinition
+#com.bitwig.extensions.controllers.mackie.MackieMcuProX2ExtensionDefinition
 
 com.bitwig.extensions.controllers.novation.launch_control_xl.LaunchControlXlControllerExtensionDefinition
 com.bitwig.extensions.controllers.novation.launchkey_mini.LaunchkeyMiniControllerExtensionDefinition
