@@ -287,7 +287,7 @@ public class LaunchkeyMk2ControllerExtension extends ControllerExtension
       }
       else if (status == 191 && data1 == 116 && data2 == 127)
       {
-         mTransport.isArrangerLoopEnabled().toggle();
+         mTransport.toggleWriteArrangerAutomation();
       }
       else if (status == 191 && data1 == 117 && data2 == 127)
       {
